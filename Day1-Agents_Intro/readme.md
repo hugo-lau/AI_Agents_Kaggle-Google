@@ -1,85 +1,74 @@
-# Day 1: First Steps into AI Agents 🤖
+# Day 1: Introduction to Agents 🤖
 
-## What I Built Today
+## What the Whitepaper Covered
 
-Kicked off the Kaggle x Google AI Agents course by building my first actual AI agent! Not just calling an API, but creating an autonomous agent that can think, act, and use tools to solve problems.
+Day 1's whitepaper was all about laying the foundation for understanding AI agents. Here's what stuck with me:
 
-### The Main Projects
+### Agent Taxonomy
+The paper broke down different levels of agent capabilities - basically a classification system for what agents can actually do. Goes from simple task executors to more complex autonomous systems.
 
-1. **Built My First Agent** - Created a basic agent using Google's Agent Development Kit (ADK) that can use Google Search to answer questions with current information
-2. **Explored Multi-Agent Systems** - Got my hands dirty with multiple agents working together (separate codelab)
+### AgentOps - The New Discipline
+This was interesting. They're pushing for "AgentOps" as a discipline (like DevOps, but for AI agents). Makes sense when you think about it - if these agents are going to run in production, you need:
+- Reliability practices
+- Governance frameworks  
+- Monitoring and observability
 
-## Key Concepts I Learned
+Can't just YOLO agents into production and hope for the best.
 
-### What Even Is an Agent?
+### Interoperability & Security
+They emphasized that agents need to play nice with each other and with existing systems. Security-wise, they talked about:
+- Identity management for agents
+- Constrained policies (so agents don't go rogue)
+- Access controls
 
-An **AI agent** isn't just an LLM chatbot. It's a system that operates in a continuous loop:
-- **THINK** → The model reasons about what to do next
-- **ACT** → Takes actions using tools (like searching the web, calling APIs, etc.)
-- **OBSERVE** → Gets results back and decides if the mission is complete
+Basically, treating agents like any other system component that needs proper security guardrails.
 
-This cycle keeps going until the agent achieves its goal. Pretty cool that it makes these decisions autonomously!
+## What I Did in the Codelabs
 
-### The ADK Architecture
+### Codelab 1: Built My First Agent with ADK
 
-ADK (Agent Development Kit) has these core components:
+The first exercise walked through creating a basic agent using Google's Agent Development Kit. Pretty straightforward:
 
-```python
-Agent(
-    name="helpful_assistant",
-    model=Gemini(model="gemini-2.5-flash-lite"),
-    description="A simple agent that can answer general questions",
-    instruction="You are a helpful assistant. Use Google Search for current info",
-    tools=[google_search],  # This is the magic!
-)
-```
+1. **Set up the environment** - Got my Google API key configured, imported ADK components
+2. **Defined an agent** - Created a simple agent with a name, model (Gemini 2.5 Flash Lite), and instructions
+3. **Gave it a tool** - Added the `google_search` tool so it could look up current info
+4. **Ran it** - Used `InMemoryRunner` to actually execute queries
 
-**What I found interesting**: The agent decides *when* to use tools on its own. I just gave it the capability, and it figured out when searching was necessary vs when it could answer from its training.
+The cool part was seeing the agent decide on its own when to use Google Search vs when it already knew the answer.
 
-### The Runner & Sessions
+### Codelab 2: Multi-Agent Systems
 
-The **Runner** is like the orchestrator - it manages the conversation flow and coordinates between you, the agent, and the tools.
+Second codelab was about getting multiple agents working together. This one explored:
 
-I learned about **sessions** too - they're like short-term memory containers for a conversation. Each session has its own history that persists across multiple back-and-forth exchanges.
+- **Creating specialized agents** - Different agents with different capabilities/purposes
+- **Agent coordination** - How to get agents to collaborate on complex tasks
+- **Architectural patterns** - Different ways to structure multi-agent systems
 
-## What I Actually Built
+The idea being that sometimes one generalist agent isn't enough - you want a team of specialists working together.
 
-### My First Agent
+### Bonus: ADK Web UI
 
-Created an agent that can answer questions by:
-1. Deciding if it needs current information
-2. Calling Google Search when needed
-3. Synthesizing results into a coherent answer
-
-Example question I tested: *"What is Agent Development Kit from Google? What languages is the SDK available in?"*
-
-The agent autonomously decided to search, found that ADK is available in **Python, Java, and Go**, and gave me a solid answer about what ADK actually is.
-
-### The ADK Web Interface
-
-Also explored the ADK web UI - a built-in interface for testing and debugging agents. Used the CLI to scaffold a new agent project:
+Also played around with the ADK web interface. It's a built-in UI for testing and debugging agents. Used the CLI to scaffold a project:
 
 ```bash
 adk create sample-agent --model gemini-2.5-flash-lite
 ```
 
-This creates a proper project structure with `.env` for API keys, `agent.py` for the agent definition, etc.
+Creates a proper project structure with config files, agent definition, etc. The web UI was handy for seeing what the agent was actually doing under the hood.
 
-## Aha Moments 💡
+## Quick Takeaways
 
-1. **Tools Transform LLMs into Agents** - Without tools, an LLM is stuck with outdated knowledge. With tools (like Google Search), it becomes an agent that can access real-time information and take action.
+- **Agents ≠ LLMs** - An agent is an LLM + tools + orchestration logic
+- **Tools are the key** - Without tools, you just have a chatbot. With tools, you have an agent that can take action
+- **Production matters** - The AgentOps focus shows they're thinking about real-world deployment, not just demos
+- **Multi-agent is a thing** - Complex problems might need teams of specialized agents rather than one do-it-all agent
 
-2. **The Agent Decides** - I didn't have to tell it "first search, then answer." It figured out the strategy on its own based on the instruction and available tools.
+## Resources
 
-3. **Infrastructure Matters** - Learned that everything runs on Kaggle's cloud VMs, not locally. The web UI uses proxy URLs to tunnel through Kaggle's infrastructure.
+- 📄 [Day 1 Whitepaper: Introduction to Agents](https://www.kaggle.com/learn/5-day-agents)
+- 🎙️ [Podcast Summary - NotebookLM](https://www.kaggle.com/learn/5-day-agents)
+- 💻 Codelabs: Building first agent & multi-agent systems
 
-## Tech Stack for Day 1
+---
 
-- **ADK** (Agent Development Kit) - Google's framework for building agents
-- **Gemini 2.5 Flash Lite** - The LLM model powering the agent's reasoning
-- **Google Search Tool** - Built-in tool for accessing current web information
-- **InMemoryRunner** - For executing agent interactions
-- **InMemorySessionService** - For managing conversation state
-
-
-
+*Part of the [5-Day AI Agents Intensive with Google](https://www.kaggle.com/learn/5-day-agents)
